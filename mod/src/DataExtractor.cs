@@ -1,95 +1,95 @@
 ﻿/*
  * Data Extraction Mod
- * 
+ *
  * -------------------------------------
  * DESCRIPTION
  * -------------------------------------
- * 
+ *
  * This is a simple and somewhat messy mod that extracts in game data.
  * It was designed to export the game data in JSON with the majority of relevant fields.
- * 
+ *
  * The current version of the mod only covers buildings/machines that are part of the production chain recipes.
  * Thus, any buildings that are not part of production chaings (ramps, transports, retaining walls, etc) are not included.
  * The only exception is Vehicles and Ship upgrade parts which were specifically requested by someone.
- * 
+ *
  * Each object in the game has a Proto (prototype) that defines the object's properties and capabilities.
  * These prototypes are registerd with the game's Prototype Database (ProtoDB).
- * 
+ *
  * What this mod does is fetch the Protos for the ProtoDB and read the relevant properties and formats and exports them into JSON format.
- * 
+ *
  * Not All Objects share the same prototype, while most Machines do share the same prototype (MachineProto) many of the other specialized buildings
  * have their own unique protos.
- * 
+ *
  * There are two methods used to get the Protos from the DB, The first uses a list of Proto IDs to get the Protos from the DB, this requires having
  * a list of the Ids to lookup. These IDs can be found in Mafi.Base.Ids. With this I could then get each individual instance and lookup its Prototype.
- * 
+ *
  * The second methods is more simple.
- * 
+ *
  * After getting more familiar familiar with the code, I realized that you could just request all instances of a specific Proto from the DB, this
  * eliminates a few steps, mainly having the need of specifying a list of Ids.
- * 
+ *
  * The first part of the code uses the old method and I have not converted it to the new format.
- * 
+ *
  * -------------------------------------
  * JSON FORMATTING AND EXPORTING
  * -------------------------------------
- * 
+ *
  * I could not get the usual JSON serialization methods to work so I created a simple yet sloppy implementation to have proper JSON formatting.
  * There are different types of buildings/machines and thus there are several functions for formatting each kinds. Those are the first functions
  * you will see in the code below.
- * 
- * The resulting JSON files are exported to C:/temp but can be changed below, the folder might need to exists beforehand to prevent possible errors.
- * 
+ *
+ * The resulting JSON files are exported to D:/COI/daxfb-calculator/data/coi/rawgamedata but can be changed below, the folder might need to exists beforehand to prevent possible errors.
+ *
  * -------------------------------------
  * LIST OF MISSING ITEMS
  * -------------------------------------
  * Ids.Buildings.TradeDock
- * 
+ *
  * Ids.Buildings.MineTower
- * 
+ *
  * Ids.Buildings.HeadquartersT1
- * 
+ *
  * Ids.Machines.Flywheel
- * 
+ *
  * Ids.Buildings.Beacon
- * 
+ *
  * Ids.Buildings.Clinic
- * 
+ *
  * Ids.Buildings.SettlementPillar
  * Ids.Buildings.SettlementFountain
  * Ids.Buildings.SettlementSquare1
  * Ids.Buildings.SettlementSquare2
- * 
+ *
  * Ids.Buildings.Shipyard
  * Ids.Buildings.Shipyard2
- * 
+ *
  * Ids.Buildings.VehicleRamp
  * Ids.Buildings.VehicleRamp2
  * Ids.Buildings.VehicleRamp3
- * 
+ *
  * Ids.Buildings.RetainingWallStraight1
  * Ids.Buildings.RetainingWallStraight4
  * Ids.Buildings.RetainingWallCorner
  * Ids.Buildings.RetainingWallCross
  * Ids.Buildings.RetainingWallTee
- * 
+ *
  * Ids.Buildings.BarrierStraight1
  * Ids.Buildings.BarrierCorner
- * 
+ *
  * Ids.Buildings.BarrierCross
  * Ids.Buildings.BarrierTee
  * Ids.Buildings.BarrierEnding
- * 
+ *
  * Ids.Buildings.StatueOfMaintenance
  * Ids.Buildings.StatueOfMaintenanceGolden
- * 
+ *
  * Ids.Buildings.TombOfCaptainsStage1
  * Ids.Buildings.TombOfCaptainsStage2
  * Ids.Buildings.TombOfCaptainsStage3
  * Ids.Buildings.TombOfCaptainsStage4
  * Ids.Buildings.TombOfCaptainsStage5
  * Ids.Buildings.TombOfCaptainsStageFinal
- * 
+ *
  */
 
 using Mafi;
@@ -919,7 +919,7 @@ namespace DataExtractorMod
             }
             upgradeItems.Add($"\"fuel_tanks\":[{tankItems.JoinStrings(",")}]");
 
-            File.WriteAllText("c:/temp/ship_upgrades.json", $"{{\"game_version\":\"{game_version}\",{upgradeItems.JoinStrings(",")}}}");
+            File.WriteAllText("D:/COI/daxfb-calculator/data/coi/rawgamedata/ship_upgrades.json", $"{{\"game_version\":\"{game_version}\",{upgradeItems.JoinStrings(",")}}}");
 
             /*
              * -------------------------------------
@@ -975,7 +975,7 @@ namespace DataExtractorMod
 
             }
 
-            File.WriteAllText("c:/temp/vehicles.json", $"{{\"game_version\":\"{game_version}\",\"vehicles\":[{vehicleItems.JoinStrings(",")}]}}");
+            File.WriteAllText("D:/COI/daxfb-calculator/data/coi/rawgamedata/vehicles.json", $"{{\"game_version\":\"{game_version}\",\"vehicles\":[{vehicleItems.JoinStrings(",")}]}}");
 
             /*
              * -------------------------------------
@@ -2052,7 +2052,7 @@ namespace DataExtractorMod
                 }
             }
 
-            File.WriteAllText("c:/temp/products.json", $"{{\"game_version\":\"{game_version}\",\"products\":[{productsJson.JoinStrings(",")}]}}");
+            File.WriteAllText("D:/COI/daxfb-calculator/data/coi/rawgamedata/products.json", $"{{\"game_version\":\"{game_version}\",\"products\":[{productsJson.JoinStrings(",")}]}}");
 
             List<string> storageItems = new List<string> { };
 
@@ -3276,7 +3276,7 @@ namespace DataExtractorMod
 
             }
 
-            File.WriteAllText("c:/temp/terrain_materials.json", $"{{\"game_version\":\"{game_version}\",\"terrain_materials\":[{materialItems.JoinStrings(",")}]}}");
+            File.WriteAllText("D:/COI/daxfb-calculator/data/coi/rawgamedata/terrain_materials.json", $"{{\"game_version\":\"{game_version}\",\"terrain_materials\":[{materialItems.JoinStrings(",")}]}}");
 
             List<string> contractItems = new List<string> { };
 
@@ -3300,7 +3300,7 @@ namespace DataExtractorMod
 
             }
 
-            File.WriteAllText("c:/temp/contracts.json", $"{{\"game_version\":\"{game_version}\",\"contracts\":[{contractItems.JoinStrings(",")}]}}");
+            File.WriteAllText("D:/COI/daxfb-calculator/data/coi/rawgamedata/contracts.json", $"{{\"game_version\":\"{game_version}\",\"contracts\":[{contractItems.JoinStrings(",")}]}}");
 
             /*
                 * -------------------------------------
@@ -3348,7 +3348,7 @@ namespace DataExtractorMod
 
             }
 
-            File.WriteAllText("c:/temp/transports.json", $"{{\"game_version\":\"{game_version}\",\"transports\":[{transportItems.JoinStrings(",")}]}}");
+            File.WriteAllText("D:/COI/daxfb-calculator/data/coi/rawgamedata/transports.json", $"{{\"game_version\":\"{game_version}\",\"transports\":[{transportItems.JoinStrings(",")}]}}");
 
             /*
                 * -------------------------------------
@@ -3356,8 +3356,8 @@ namespace DataExtractorMod
                 * -------------------------------------
             */
 
-            File.WriteAllText("c:/temp/machines_and_buildings.json", $"{{\"game_version\":\"{game_version}\",\"machines_and_buildings\":[{machineItems.JoinStrings(",")}]}}");
-            File.WriteAllText("c:/temp/storages.json", $"{{\"game_version\":\"{game_version}\",\"storages\":[{storageItems.JoinStrings(",")}]}}");
+            File.WriteAllText("D:/COI/daxfb-calculator/data/coi/rawgamedata/machines_and_buildings.json", $"{{\"game_version\":\"{game_version}\",\"machines_and_buildings\":[{machineItems.JoinStrings(",")}]}}");
+            File.WriteAllText("D:/COI/daxfb-calculator/data/coi/rawgamedata/storages.json", $"{{\"game_version\":\"{game_version}\",\"storages\":[{storageItems.JoinStrings(",")}]}}");
 
             /*
                 * -------------------------------------
@@ -3368,7 +3368,7 @@ namespace DataExtractorMod
 
             if (DUMP.Count != 0)
             {
-                File.WriteAllLines("c:/temp/dump.txt", DUMP);
+                File.WriteAllLines("D:/COI/daxfb-calculator/data/coi/rawgamedata/dump.txt", DUMP);
             }
         }
 
